@@ -45,7 +45,7 @@ export const ServicePage = ({
       <div className="container mx-auto px-4 py-12 flex-1">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
           <div>
-            <h2 className="text-2xl font-semibold mb-6">Key Features</h2>
+            <h2 className="text-2xl font-semibold mb-6">Ключевые функции</h2>
             <ul className="space-y-4">
               {features.map((feature, index) => (
                 <li key={index} className="flex items-start">
@@ -61,7 +61,7 @@ export const ServicePage = ({
           </div>
 
           <div>
-            <h2 className="text-2xl font-semibold mb-6">Benefits</h2>
+            <h2 className="text-2xl font-semibold mb-6">Преимущества</h2>
             <ul className="space-y-4">
               {benefits.map((benefit, index) => (
                 <li key={index} className="flex items-start">

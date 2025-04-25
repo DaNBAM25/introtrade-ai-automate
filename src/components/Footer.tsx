@@ -1,5 +1,5 @@
 
-import { Mail, MapPin } from "lucide-react";
+import { Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
@@ -13,8 +13,8 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Компания</h3>
             <ul className="space-y-2">
-              <li><Link to="/about" className="hover:text-blue-300">О нас</Link></li>
-              <li><Link to="/documents" className="hover:text-blue-300">Документы</Link></li>
+              <li><Link to="/about" className="hover:text-cyan-300">О нас</Link></li>
+              <li><Link to="/documents" className="hover:text-cyan-300">Документы</Link></li>
             </ul>
           </div>
 
@@ -22,10 +22,10 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Решения</h3>
             <ul className="space-y-2">
-              <li><Link to="/solutions/ai-bots" className="hover:text-blue-300">AI Боты</Link></li>
-              <li><Link to="/solutions/data-analysis" className="hover:text-blue-300">Анализ данных</Link></li>
-              <li><Link to="/solutions/ai-protection" className="hover:text-blue-300">Защита от AI атак</Link></li>
-              <li><Link to="/solutions/financial-analysis" className="hover:text-blue-300">Финансовый AI анализ</Link></li>
+              <li><Link to="/solutions/ai-bots" className="hover:text-cyan-300">AI Боты</Link></li>
+              <li><Link to="/solutions/data-analysis" className="hover:text-cyan-300">Анализ данных</Link></li>
+              <li><Link to="/solutions/ai-protection" className="hover:text-cyan-300">Защита от AI атак</Link></li>
+              <li><Link to="/solutions/financial-analysis" className="hover:text-cyan-300">Финансовый AI анализ</Link></li>
             </ul>
           </div>
 
@@ -35,7 +35,15 @@ const Footer = () => {
             <ul className="space-y-2">
               <li className="flex items-center gap-2">
                 <Mail className="h-4 w-4" />
-                <a href="mailto:info@icg.ai" className="hover:text-blue-300">info@icg.ai</a>
+                <a href="mailto:info@icg.ai" className="hover:text-cyan-300">info@icg.ai</a>
+              </li>
+              <li className="flex items-center gap-2">
+                <MessageCircle className="h-4 w-4" />
+                <a href="https://t.me/icgai" className="hover:text-cyan-300">Telegram</a>
+              </li>
+              <li className="flex items-center gap-2">
+                <Phone className="h-4 w-4" />
+                <a href="https://wa.me/+79123456789" className="hover:text-cyan-300">WhatsApp</a>
               </li>
               <li className="flex items-center gap-2">
                 <MapPin className="h-4 w-4" />

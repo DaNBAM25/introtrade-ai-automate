@@ -16,8 +16,8 @@ export const ServiceCard = ({ title, description, icon: Icon, link }: ServiceCar
     <Card className="flex flex-col h-full transition-all hover:shadow-lg">
       <CardContent className="flex-1 pt-6">
         <div className="mb-4 flex justify-center">
-          <div className="p-3 rounded-full bg-blue-50">
-            <Icon className="h-8 w-8 text-blue-500" />
+          <div className="p-3 rounded-full bg-cyan-50">
+            <Icon className="h-8 w-8 text-cyan-500" />
           </div>
         </div>
         <h3 className="text-xl font-semibold text-center mb-2">{title}</h3>
@@ -25,7 +25,7 @@ export const ServiceCard = ({ title, description, icon: Icon, link }: ServiceCar
       </CardContent>
       <CardFooter className="flex justify-center pb-6">
         <Button asChild variant="outline">
-          <Link to={link}>More details</Link>
+          <Link to={link}>Подробнее</Link>
         </Button>
       </CardFooter>
     </Card>
