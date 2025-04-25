@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import Header from "@/components/Header";
@@ -21,13 +20,13 @@ export const ServicePage = ({
   icon: Icon,
   features,
   benefits,
-  iconColor = "text-blue-500",
-  backgroundColor = "bg-blue-50"
+  iconColor = "text-cyan-500",
+  backgroundColor = "bg-cyan-50"
 }: ServicePageProps) => {
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen flex flex-col">
       <Header />
       <div className={`${backgroundColor} py-16`}>
         <div className="container mx-auto px-4">
@@ -41,7 +40,7 @@ export const ServicePage = ({
         </div>
       </div>
 
-      <div className="container mx-auto px-4 py-12">
+      <div className="container mx-auto px-4 py-12 flex-1">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
           <div>
             <h2 className="text-2xl font-semibold mb-6">Key Features</h2>
@@ -76,14 +75,18 @@ export const ServicePage = ({
           </div>
         </div>
 
-        <div className="bg-gray-50 rounded-lg p-8 text-center">
-          <h2 className="text-2xl font-bold mb-4">Ready to implement {title.toLowerCase()}?</h2>
+        <div className="bg-gradient-to-br from-cyan-50 to-blue-50 rounded-lg p-8 text-center">
+          <h2 className="text-2xl font-bold mb-4">Готовы внедрить {title.toLowerCase()}?</h2>
           <p className="mb-6 max-w-2xl mx-auto">
-            Our experts will analyze your business needs and offer a customized solution
-            that perfectly fits your requirements and budget.
+            Наши эксперты проанализируют потребности вашего бизнеса и предложат 
+            индивидуальное решение, которое идеально подойдет под ваши требования и бюджет.
           </p>
-          <Button size="lg" onClick={() => setIsContactModalOpen(true)}>
-            Contact a specialist
+          <Button 
+            size="lg" 
+            className="bg-cyan-600 hover:bg-cyan-700"
+            onClick={() => setIsContactModalOpen(true)}
+          >
+            Связаться со специалистом
           </Button>
         </div>
       </div>
@@ -91,9 +94,10 @@ export const ServicePage = ({
       <ContactFormModal
         open={isContactModalOpen}
         onOpenChange={setIsContactModalOpen}
-        title={`Get a consultation on ${title}`}
-        description="Leave your contact details and our specialist will contact you shortly with a personalized offer."
+        title={`Получить консультацию по ${title}`}
+        description="Оставьте ваши контактные данные, и наш специалист свяжется с вами в ближайшее время с персональным предложением."
       />
+      <Footer />
     </div>
   );
 };
