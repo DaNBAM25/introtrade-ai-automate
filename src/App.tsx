@@ -10,6 +10,10 @@ import AiConsultant from "./pages/AiConsultant";
 import BusinessPlan from "./pages/BusinessPlan";
 import Contacts from "./pages/Contacts";
 import NotFound from "./pages/NotFound";
+import AIBots from "./pages/AIBots";
+import DataAnalysis from "./pages/DataAnalysis";
+import AIProtection from "./pages/AIProtection";
+import FinancialAnalysis from "./pages/FinancialAnalysis";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +26,10 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/solutions" element={<Solutions />} />
+          <Route path="/solutions/ai-bots" element={<AIBots />} />
+          <Route path="/solutions/data-analysis" element={<DataAnalysis />} />
+          <Route path="/solutions/ai-protection" element={<AIProtection />} />
+          <Route path="/solutions/financial-analysis" element={<FinancialAnalysis />} />
           <Route path="/ai-consultant" element={<AiConsultant />} />
           <Route path="/business-plan" element={<BusinessPlan />} />
           <Route path="/contacts" element={<Contacts />} />
