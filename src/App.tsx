@@ -1,4 +1,5 @@
 
+import React from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -15,29 +16,32 @@ import DataAnalysis from "./pages/DataAnalysis";
 import AIProtection from "./pages/AIProtection";
 import FinancialAnalysis from "./pages/FinancialAnalysis";
 
-const queryClient = new QueryClient();
+// Create a new query client instance inside the functional component
+const App = () => {
+  const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/solutions" element={<Solutions />} />
-          <Route path="/solutions/ai-bots" element={<AIBots />} />
-          <Route path="/solutions/data-analysis" element={<DataAnalysis />} />
-          <Route path="/solutions/ai-protection" element={<AIProtection />} />
-          <Route path="/solutions/financial-analysis" element={<FinancialAnalysis />} />
-          <Route path="/ai-consultant" element={<AiConsultant />} />
-          <Route path="/business-plan" element={<BusinessPlan />} />
-          <Route path="/contacts" element={<Contacts />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/solutions" element={<Solutions />} />
+            <Route path="/solutions/ai-bots" element={<AIBots />} />
+            <Route path="/solutions/data-analysis" element={<DataAnalysis />} />
+            <Route path="/solutions/ai-protection" element={<AIProtection />} />
+            <Route path="/solutions/financial-analysis" element={<FinancialAnalysis />} />
+            <Route path="/ai-consultant" element={<AiConsultant />} />
+            <Route path="/business-plan" element={<BusinessPlan />} />
+            <Route path="/contacts" element={<Contacts />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
+    </QueryClientProvider>
+  );
+};
 
 export default App;
