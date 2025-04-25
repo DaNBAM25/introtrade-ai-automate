@@ -1,6 +1,8 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import { ContactFormModal } from "@/components/ContactFormModal";
 import { LucideIcon } from "lucide-react";
 
