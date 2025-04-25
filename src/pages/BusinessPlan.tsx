@@ -1,8 +1,12 @@
 
+import { BusinessPlanGenerator } from "@/components/BusinessPlanGenerator";
+import Header from "@/components/Header";
+
 const BusinessPlan = () => {
   return (
     <div className="min-h-screen">
-      <h1>Business Plan Generator Page</h1>
+      <Header />
+      <BusinessPlanGenerator />
     </div>
   );
 };
