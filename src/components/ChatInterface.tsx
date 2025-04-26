@@ -1,8 +1,10 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { Send } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface Message {
   content: string;
@@ -51,7 +53,7 @@ export const ChatInterface = ({ className }: ChatInterfaceProps) => {
   };
 
   return (
-    <div className={cn("flex h-[600px] w-full max-w-2xl flex-col rounded-lg border bg-white p-4 shadow-lg", className)}>
+    <div className={cn("flex h-[400px] w-full max-w-2xl flex-col rounded-lg border bg-white p-4 shadow-lg", className)}>
       <div className="mb-4 flex-1 space-y-4 overflow-y-auto">
         {messages.map((message, index) => (
           <div
