@@ -1,7 +1,13 @@
 
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { ContactFormModal } from "@/components/ContactFormModal";
+import { useState } from "react";
 
 const Hero = () => {
+  const navigate = useNavigate();
+  const [showContactForm, setShowContactForm] = useState(false);
+
   return (
     <div className="relative bg-gradient-to-br from-cyan-600 to-blue-800 text-white">
       <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1518770660439-4636190af475')] bg-cover bg-center bg-no-repeat opacity-10"></div>
@@ -17,15 +23,30 @@ const Hero = () => {
           </p>
           
           <div className="flex flex-wrap gap-4">
-            <Button size="lg" className="bg-cyan-500 hover:bg-cyan-600" asChild>
-              <a href="#demo">Попробовать демо</a>
+            <Button 
+              size="lg" 
+              className="bg-cyan-500 hover:bg-cyan-600" 
+              onClick={() => navigate("/business-plan")}
+            >
+              Попробовать демо
             </Button>
-            <Button size="lg" variant="outline" className="text-white border-white hover:bg-white/10" asChild>
-              <a href="#contact">Заказать внедрение</a>
+            <Button 
+              size="lg" 
+              className="bg-cyan-500 hover:bg-cyan-600"
+              onClick={() => setShowContactForm(true)}
+            >
+              Заказать внедрение
             </Button>
           </div>
         </div>
       </div>
+
+      <ContactFormModal 
+        open={showContactForm} 
+        onOpenChange={setShowContactForm}
+        title="Заказать внедрение"
+        description="Оставьте свои контакты, и наш специалист свяжется с вами в ближайшее время"
+      />
     </div>
   );
 };

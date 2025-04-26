@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -15,8 +14,8 @@ import AIBots from "./pages/AIBots";
 import DataAnalysis from "./pages/DataAnalysis";
 import AIProtection from "./pages/AIProtection";
 import FinancialAnalysis from "./pages/FinancialAnalysis";
+import About from "./pages/About";
 
-// Create a new query client instance inside the functional component
 const App = () => {
   const queryClient = new QueryClient();
 
@@ -36,6 +35,7 @@ const App = () => {
             <Route path="/ai-consultant" element={<AiConsultant />} />
             <Route path="/business-plan" element={<BusinessPlan />} />
             <Route path="/contacts" element={<Contacts />} />
+            <Route path="/about" element={<About />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

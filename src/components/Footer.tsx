@@ -35,19 +35,19 @@ const Footer = () => {
             <ul className="space-y-2">
               <li className="flex items-center gap-2">
                 <Mail className="h-4 w-4" />
-                <a href="mailto:info@icg.ai" className="hover:text-cyan-300">info@icg.ai</a>
+                <a href="mailto:info@introbiz.ru" className="hover:text-cyan-300">info@introbiz.ru</a>
               </li>
               <li className="flex items-center gap-2">
                 <MessageCircle className="h-4 w-4" />
-                <a href="https://t.me/icgai" className="hover:text-cyan-300">Telegram</a>
+                <a href="https://t.me/+79375953627" className="hover:text-cyan-300">Telegram</a>
               </li>
               <li className="flex items-center gap-2">
                 <Phone className="h-4 w-4" />
-                <a href="https://wa.me/+79123456789" className="hover:text-cyan-300">WhatsApp</a>
+                <a href="https://wa.me/+79375953627" className="hover:text-cyan-300">WhatsApp</a>
               </li>
               <li className="flex items-center gap-2">
                 <MapPin className="h-4 w-4" />
-                <span>Москва, ул. Тверская, 1</span>
+                <span>Москва, Санкт-Петербург, Уфа, Сингапур, ОАЭ</span>
               </li>
             </ul>
           </div>

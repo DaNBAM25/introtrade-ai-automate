@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,7 +9,11 @@ interface Message {
   isUser: boolean;
 }
 
-export const ChatInterface = () => {
+interface ChatInterfaceProps {
+  className?: string;
+}
+
+export const ChatInterface = ({ className }: ChatInterfaceProps) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -48,7 +51,7 @@ export const ChatInterface = () => {
   };
 
   return (
-    <div className="flex h-[600px] w-full max-w-2xl flex-col rounded-lg border bg-white p-4 shadow-lg">
+    <div className={cn("flex h-[600px] w-full max-w-2xl flex-col rounded-lg border bg-white p-4 shadow-lg", className)}>
       <div className="mb-4 flex-1 space-y-4 overflow-y-auto">
         {messages.map((message, index) => (
           <div
