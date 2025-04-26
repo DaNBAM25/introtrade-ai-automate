@@ -46,14 +46,14 @@ export const ChatInterface = ({ className }: ChatInterfaceProps) => {
       setMessages(prev => [...prev, { content: data.response || data.message || "No response received", isUser: false }]);
     } catch (error) {
       console.error("Error:", error);
-      toast.error("Failed to get response. Please try again.");
+      toast.error("Не удалось получить ответ. Пожалуйста, попробуйте снова.");
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div className={cn("flex h-[400px] w-full max-w-2xl flex-col rounded-lg border bg-white p-4 shadow-lg", className)}>
+    <div className={cn("flex h-[250px] w-full max-w-2xl flex-col rounded-lg border-4 border-cyan-500 bg-white p-4 shadow-lg", className)}>
       <div className="mb-4 flex-1 space-y-4 overflow-y-auto">
         {messages.map((message, index) => (
           <div
@@ -63,8 +63,8 @@ export const ChatInterface = ({ className }: ChatInterfaceProps) => {
             <div
               className={`max-w-[80%] rounded-lg px-4 py-2 ${
                 message.isUser
-                  ? "bg-primary text-primary-foreground"
-                  : "bg-muted"
+                  ? "bg-cyan-500 text-white"
+                  : "bg-gray-100"
               }`}
             >
               {message.content}
@@ -73,8 +73,8 @@ export const ChatInterface = ({ className }: ChatInterfaceProps) => {
         ))}
         {isLoading && (
           <div className="flex justify-start">
-            <div className="max-w-[80%] rounded-lg bg-muted px-4 py-2">
-              Thinking...
+            <div className="max-w-[80%] rounded-lg bg-gray-100 px-4 py-2">
+              Думаю...
             </div>
           </div>
         )}
@@ -83,16 +83,16 @@ export const ChatInterface = ({ className }: ChatInterfaceProps) => {
         <Input
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder="Type your message..."
+          placeholder="Введите ваш вопрос..."
           disabled={isLoading}
           className="flex-1"
         />
-        <Button type="submit" disabled={isLoading}>
+        <Button type="submit" disabled={isLoading} className="bg-cyan-500 hover:bg-cyan-600">
           <Send className="h-4 w-4" />
         </Button>
       </form>
       <p className="mt-4 text-sm text-muted-foreground">
-        This is a demo version. The full consultation includes an in-depth analysis.
+        Это демо версия. Полная консультация включает подробный анализ.
       </p>
     </div>
   );
