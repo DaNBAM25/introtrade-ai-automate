@@ -5,26 +5,26 @@ import { Bot } from "lucide-react";
 const AIBots = () => {
   return (
     <ServicePage
-      title="AI Bots for Automation"
-      description="Deploy intelligent bots that automate routine tasks, provide 24/7 customer support, and process applications with unprecedented efficiency."
+      title="AI-боты для автоматизации"
+      description="Развертывание интеллектуальных ботов, которые автоматизируют рутинные задачи, обеспечивают круглосуточную поддержку клиентов и обрабатывают заявки с беспрецедентной эффективностью."
       icon={Bot}
       iconColor="text-blue-600"
       backgroundColor="bg-blue-50"
       features={[
-        "Conversational chatbots with natural language processing capabilities",
-        "Voice assistants for hands-free operation and accessibility",
-        "Automated application processing and document handling",
-        "Multi-language support for global businesses",
-        "Integration with existing business systems and workflows",
-        "Custom AI training on your business-specific data"
+        "Диалоговые чат-боты с возможностями обработки естественного языка",
+        "Голосовые помощники для работы без рук и обеспечения доступности",
+        "Автоматизированная обработка заявок и работа с документами",
+        "Поддержка многоязычности для международного бизнеса",
+        "Интеграция с существующими бизнес-системами и рабочими процессами",
+        "Индивидуальное обучение AI на специфических данных вашего бизнеса"
       ]}
       benefits={[
-        "Reduce support load by up to 70% by automating routine inquiries",
-        "24/7 availability with no staff burnout or overtime costs",
-        "Consistent customer experience across all interactions",
-        "Faster response times leading to improved customer satisfaction",
-        "Reduced operational costs and increased staff productivity",
-        "Detailed analytics on customer interactions and pain points"
+        "Сокращение нагрузки на поддержку до 70% за счет автоматизации рутинных запросов",
+        "Круглосуточная доступность без выгорания и сверхурочных затрат персонала",
+        "Последовательный пользовательский опыт во всех взаимодействиях",
+        "Более быстрое время реагирования, ведущее к повышению удовлетворенности клиентов",
+        "Снижение операционных расходов и повышение производительности персонала",
+        "Подробная аналитика взаимодействий с клиентами и болевых точек"
       ]}
     />
   );
