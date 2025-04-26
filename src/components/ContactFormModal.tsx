@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { supabase } from "@/integrations/supabase/client";
 
 interface ContactFormModalProps {
   open: boolean;
@@ -20,7 +21,6 @@ export const ContactFormModal = ({
   onOpenChange,
   title = "Contact a specialist",
   description = "Fill in your details and our team will contact you shortly.",
-  webhookUrl = "https://bazar11.app.n8n.cloud/webhook-test/222222"
 }: ContactFormModalProps) => {
   const [name, setName] = useState("");
   const [contact, setContact] = useState("");
@@ -31,39 +31,35 @@ export const ContactFormModal = ({
     e.preventDefault();
     
     if (!name || !contact) {
-      toast.error("Please fill in your name and contact information");
+      toast.error("Пожалуйста, заполните ваше имя и контактную информацию");
       return;
     }
 
     setIsLoading(true);
 
     try {
-      const response = await fetch(webhookUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name,
-          contact,
-          comment,
-          timestamp: new Date().toISOString(),
-          source: window.location.pathname
-        }),
-      });
+      const { error } = await supabase
+        .from('Contacts_lov')
+        .insert([
+          {
+            name,
+            "Phone/email": contact,
+            comments: comment,
+          }
+        ]);
 
-      if (!response.ok) {
-        throw new Error("Failed to submit form");
+      if (error) {
+        throw error;
       }
 
-      toast.success("Your request has been submitted successfully!");
+      toast.success("Ваша заявка успешно отправлена!");
       setName("");
       setContact("");
       setComment("");
       onOpenChange(false);
     } catch (error) {
       console.error("Error submitting form:", error);
-      toast.error("Failed to submit form. Please try again later.");
+      toast.error("Не удалось отправить форму. Пожалуйста, попробуйте позже.");
     } finally {
       setIsLoading(false);
     }
@@ -78,40 +74,40 @@ export const ContactFormModal = ({
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="grid w-full gap-2">
-            <Label htmlFor="name">Full Name</Label>
+            <Label htmlFor="name">Полное имя</Label>
             <Input
               id="name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="Enter your full name"
+              placeholder="Введите ваше полное имя"
               required
             />
           </div>
           <div className="grid w-full gap-2">
-            <Label htmlFor="contact">Phone or Email</Label>
+            <Label htmlFor="contact">Телефон или Email</Label>
             <Input
               id="contact"
               value={contact}
               onChange={(e) => setContact(e.target.value)}
-              placeholder="Enter your phone or email"
+              placeholder="Введите ваш телефон или email"
               required
             />
           </div>
           <div className="grid w-full gap-2">
-            <Label htmlFor="comment">Comment (Optional)</Label>
+            <Label htmlFor="comment">Комментарий (Необязательно)</Label>
             <Textarea
               id="comment"
               value={comment}
               onChange={(e) => setComment(e.target.value)}
-              placeholder="Enter any additional information"
+              placeholder="Введите дополнительную информацию"
               className="resize-none"
             />
           </div>
           <Button type="submit" className="w-full" disabled={isLoading}>
-            {isLoading ? "Submitting..." : "Submit"}
+            {isLoading ? "Отправка..." : "Отправить"}
           </Button>
           <p className="text-xs text-muted-foreground text-center">
-            By submitting this form, you agree to our privacy policy.
+            Отправляя эту форму, вы соглашаетесь с нашей политикой конфиденциальности.
           </p>
         </form>
       </DialogContent>
