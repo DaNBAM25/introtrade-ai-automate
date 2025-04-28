@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
 import { Loader } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { ContactFormModal } from "@/components/ContactFormModal";
 
 interface BusinessPlanResponse {
   payback_period_months: number;
@@ -36,6 +37,7 @@ export const BusinessPlanGenerator = ({ webhookUrl = "https://testforspaw.app.n8
   const [isLoading, setIsLoading] = useState(false);
   const [result, setResult] = useState<BusinessPlanResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [showContactForm, setShowContactForm] = useState(false);
   const resultRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -56,7 +58,7 @@ export const BusinessPlanGenerator = ({ webhookUrl = "https://testforspaw.app.n8
     
     try {
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 seconds timeout
+      const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 seconds timeout for better reliability
       
       const response = await fetch(webhookUrl, {
         method: "POST",
@@ -197,12 +199,22 @@ export const BusinessPlanGenerator = ({ webhookUrl = "https://testforspaw.app.n8
             <p className="mb-4 font-semibold">
               📌 Результат: документ, который пройдет проверку инвесторов и банков.
             </p>
-            <Button className="w-full bg-cyan-500 hover:bg-cyan-600">
+            <Button 
+              className="w-full bg-cyan-500 hover:bg-cyan-600"
+              onClick={() => setShowContactForm(true)}
+            >
               👉 Заказать расчет под ключ
             </Button>
           </div>
         </div>
       )}
+      
+      <ContactFormModal 
+        open={showContactForm} 
+        onOpenChange={setShowContactForm}
+        title="Заказать расчет бизнес-плана под ключ"
+        description="Оставьте свои контактные данные, и наш специалист свяжется с вами для обсуждения деталей"
+      />
     </div>
   );
 };

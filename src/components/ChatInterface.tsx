@@ -19,7 +19,7 @@ interface ChatInterfaceProps {
 
 export const ChatInterface = ({ 
   className,
-  webhookUrl = "https://testforspaw.app.n8n.cloud/webhook/718269e9-8025-44cd-bc22-a8995828d49d"
+  webhookUrl = "https://testforspaw.app.n8n.cloud/webhook/consult"
 }: ChatInterfaceProps) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
@@ -45,7 +45,7 @@ export const ChatInterface = ({
 
     try {
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 seconds timeout
+      const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 seconds timeout for better reliability
 
       const response = await fetch(webhookUrl, {
         method: "POST",
