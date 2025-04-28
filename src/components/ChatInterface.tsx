@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { Send } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 interface Message {
   content: string;
@@ -23,6 +24,7 @@ export const ChatInterface = ({
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,32 +34,57 @@ export const ChatInterface = ({
     setInput("");
     setMessages(prev => [...prev, { content: userMessage, isUser: true }]);
     setIsLoading(true);
+    setError(null);
+
+    // Add a fallback response if the API call fails
+    const fallbackResponses = [
+      "Извините, я временно не могу обработать ваш запрос. Пожалуйста, попробуйте позже.",
+      "В данный момент сервис недоступен. Попробуйте обновить страницу или связаться с нами по телефону.",
+      "Технические работы на сервере. Пожалуйста, повторите запрос через несколько минут."
+    ];
 
     try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 seconds timeout
+
       const response = await fetch(webhookUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ query: userMessage }),
+        signal: controller.signal
+      }).catch(err => {
+        throw new Error("Не удалось подключиться к серверу.");
       });
 
+      clearTimeout(timeoutId);
+
       if (!response.ok) {
-        throw new Error("Failed to get response");
+        throw new Error(`Ошибка сервера: ${response.status}`);
       }
 
       const data = await response.json();
       setMessages(prev => [...prev, { content: data.response || data.message || "No response received", isUser: false }]);
     } catch (error) {
       console.error("Error:", error);
-      toast.error("Не удалось получить ответ. Пожалуйста, попробуйте снова.");
+      // Use a fallback response instead of just showing an error toast
+      const fallbackMessage = fallbackResponses[Math.floor(Math.random() * fallbackResponses.length)];
+      setMessages(prev => [...prev, { content: fallbackMessage, isUser: false }]);
+      setError("Сервис временно недоступен. Мы вернемся в ближайшее время.");
+      toast.error("Не удалось получить ответ. Пожалуйста, попробуйте позже.");
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div className={cn("flex h-[250px] w-full max-w-2xl flex-col rounded-lg border-4 border-cyan-500 bg-white p-4 shadow-lg", className)}>
+    <div className={cn("flex h-[250px] w-full max-w-2xl flex-col rounded-lg bg-white p-4 shadow-lg", className)}>
+      {error && (
+        <Alert variant="destructive" className="mb-4">
+          <AlertDescription>{error}</AlertDescription>
+        </Alert>
+      )}
       <div className="mb-4 flex-1 space-y-4 overflow-y-auto">
         {messages.map((message, index) => (
           <div
