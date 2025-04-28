@@ -13,9 +13,13 @@ interface Message {
 
 interface ChatInterfaceProps {
   className?: string;
+  webhookUrl?: string;
 }
 
-export const ChatInterface = ({ className }: ChatInterfaceProps) => {
+export const ChatInterface = ({ 
+  className,
+  webhookUrl = "https://testforspaw.app.n8n.cloud/webhook/718269e9-8025-44cd-bc22-a8995828d49d"
+}: ChatInterfaceProps) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -30,7 +34,7 @@ export const ChatInterface = ({ className }: ChatInterfaceProps) => {
     setIsLoading(true);
 
     try {
-      const response = await fetch("https://bazar11.app.n8n.cloud/webhook-test/111111", {
+      const response = await fetch(webhookUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

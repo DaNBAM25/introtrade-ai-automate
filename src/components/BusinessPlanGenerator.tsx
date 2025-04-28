@@ -1,4 +1,3 @@
-
 import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -15,7 +14,11 @@ interface BusinessPlanResponse {
   market_analysis: string;
 }
 
-export const BusinessPlanGenerator = () => {
+interface BusinessPlanGeneratorProps {
+  webhookUrl?: string;
+}
+
+export const BusinessPlanGenerator = ({ webhookUrl = "https://testforspaw.app.n8n.cloud/webhook/get_plan" }: BusinessPlanGeneratorProps) => {
   const [idea, setIdea] = useState("");
   const [location, setLocation] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -37,7 +40,7 @@ export const BusinessPlanGenerator = () => {
 
     setIsLoading(true);
     try {
-      const response = await fetch("https://bazar11.app.n8n.cloud/webhook-test/1111", {
+      const response = await fetch(webhookUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

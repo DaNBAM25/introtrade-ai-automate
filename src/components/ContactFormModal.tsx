@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { supabase } from "@/integrations/supabase/client";
 
 interface ContactFormModalProps {
   open: boolean;
@@ -21,6 +20,7 @@ export const ContactFormModal = ({
   onOpenChange,
   title = "Contact a specialist",
   description = "Fill in your details and our team will contact you shortly.",
+  webhookUrl = "https://docs.google.com/spreadsheets/d/1FUbwxuanBYSV9EkCQjUvxbVTcJTyppmFozU9oW04fts/edit?usp=drive_link",
 }: ContactFormModalProps) => {
   const [name, setName] = useState("");
   const [contact, setContact] = useState("");
@@ -38,19 +38,20 @@ export const ContactFormModal = ({
     setIsLoading(true);
 
     try {
-      const { error } = await supabase
-        .from('Contacts_lov')
-        .insert([
-          {
-            name,
-            "Phone/email": contact,
-            comments: comment,
-          }
-        ]);
-
-      if (error) {
-        throw error;
-      }
+      // Send data to Google Sheets via webhook
+      const response = await fetch("https://script.google.com/macros/s/AKfycbx0FpRpVsMXi4yQIhmDZT5lNTaVYS5cudlhCJXXj0JoaNMmqnRfdULvDwlBKFDZUFNkdw/exec", {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          FIO: name,
+          contact_s: contact,
+          comment_s: comment,
+          sheetUrl: webhookUrl,
+        }),
+      });
 
       toast.success("Ваша заявка успешно отправлена!");
       setName("");
