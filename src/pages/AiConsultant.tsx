@@ -22,7 +22,7 @@ const AiConsultant = () => {
           </p>
           
           <div className="mb-8">
-            <div className="border-4 border-cyan-500 rounded-lg p-4">
+            <div className="p-4">
               <ChatInterface className="h-[400px]" webhookUrl="https://testforspaw.app.n8n.cloud/webhook/718269e9-8025-44cd-bc22-a8995828d49d" />
             </div>
           </div>

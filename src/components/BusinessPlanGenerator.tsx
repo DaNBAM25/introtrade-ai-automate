@@ -1,9 +1,11 @@
+
 import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
 import { Loader } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 interface BusinessPlanResponse {
   payback_period_months: number;
@@ -14,6 +16,16 @@ interface BusinessPlanResponse {
   market_analysis: string;
 }
 
+// Sample fallback data for when API is unavailable
+const fallbackData: BusinessPlanResponse = {
+  payback_period_months: 18,
+  monthly_revenue_estimate: 5000,
+  startup_investment: 25000,
+  business_plan: "Это демонстрационный бизнес-план. Настоящие расчёты будут доступны после подключения к серверу. Пожалуйста, попробуйте позже или свяжитесь с нами для получения детальной консультации.",
+  marketing_plan: "Демонстрационный план маркетинга. Для получения актуального плана, пожалуйста, попробуйте позже.",
+  market_analysis: "Демонстрационный анализ рынка. Для получения актуального анализа, пожалуйста, попробуйте позже."
+};
+
 interface BusinessPlanGeneratorProps {
   webhookUrl?: string;
 }
@@ -23,6 +35,7 @@ export const BusinessPlanGenerator = ({ webhookUrl = "https://testforspaw.app.n8
   const [location, setLocation] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [result, setResult] = useState<BusinessPlanResponse | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const resultRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -39,24 +52,37 @@ export const BusinessPlanGenerator = ({ webhookUrl = "https://testforspaw.app.n8
     }
 
     setIsLoading(true);
+    setError(null);
+    
     try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 seconds timeout
+      
       const response = await fetch(webhookUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ idea, location }),
+        signal: controller.signal
+      }).catch(err => {
+        throw new Error("Не удалось подключиться к серверу.");
       });
 
+      clearTimeout(timeoutId);
+      
       if (!response.ok) {
-        throw new Error("Не удалось получить ответ от сервера");
+        throw new Error(`Ошибка сервера: ${response.status}`);
       }
 
       const data = await response.json();
       setResult(data);
     } catch (error) {
       console.error("Error:", error);
-      toast.error("Не удалось сгенерировать бизнес-план. Пожалуйста, попробуйте еще раз.");
+      setError("Сервис временно недоступен. Мы работаем над решением проблемы.");
+      // Use fallback data instead of just showing an error
+      setResult(fallbackData);
+      toast.error("Не удалось сгенерировать бизнес-план. Мы показываем демо-версию.");
     } finally {
       setIsLoading(false);
     }
@@ -64,6 +90,12 @@ export const BusinessPlanGenerator = ({ webhookUrl = "https://testforspaw.app.n8
 
   return (
     <div className="border-4 border-cyan-500 rounded-lg p-6">
+      {error && (
+        <Alert variant="destructive" className="mb-4">
+          <AlertDescription>{error}</AlertDescription>
+        </Alert>
+      )}
+      
       <form onSubmit={handleSubmit} className="mb-8 space-y-4">
         <div>
           <Input
