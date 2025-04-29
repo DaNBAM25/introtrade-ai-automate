@@ -4,11 +4,8 @@ import { ChatInterface } from "@/components/ChatInterface";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { ContactFormModal } from "@/components/ContactFormModal";
 
 const AiConsultant = () => {
-  const [showContactForm, setShowContactForm] = useState(false);
-
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
@@ -30,20 +27,13 @@ const AiConsultant = () => {
           <Button 
             size="lg"
             className="bg-cyan-500 hover:bg-cyan-600"
-            onClick={() => setShowContactForm(true)}
+            onClick={() => window.open("https://forms.gle/4gLvkK979hPjNeCEA", "_blank")}
           >
             👉 Записаться на консультацию
           </Button>
         </div>
       </main>
       <Footer />
-
-      <ContactFormModal 
-        open={showContactForm} 
-        onOpenChange={setShowContactForm}
-        title="Записаться на консультацию"
-        description="Оставьте свои контактные данные для записи на консультацию"
-      />
     </div>
   );
 };

@@ -39,7 +39,7 @@ export const BusinessPlanCallToAction = ({ onContactRequest }: BusinessPlanCallT
       </p>
       <Button 
         className="w-full py-6 text-lg font-medium rounded-xl bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 transition-all duration-300 shadow-md"
-        onClick={onContactRequest}
+        onClick={() => window.open("https://forms.gle/4gLvkK979hPjNeCEA", "_blank")}
       >
         👉 Заказать расчет под ключ
       </Button>

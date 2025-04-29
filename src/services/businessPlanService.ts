@@ -5,7 +5,7 @@ export async function fetchBusinessPlan(
   idea: string, 
   location: string, 
   webhookUrl: string,
-  timeout: number = 15000
+  timeout: number = 35000 // Increased from 15000 to 35000 (20 seconds more)
 ): Promise<BusinessPlanResponse> {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), timeout);

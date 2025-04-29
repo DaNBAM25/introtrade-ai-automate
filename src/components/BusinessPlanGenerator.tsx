@@ -43,6 +43,9 @@ export const BusinessPlanGenerator = ({
       "Составление финансовой модели...",
       "Расчет потенциальной прибыли...",
       "Финализация бизнес-плана...",
+      "Проверка данных...",
+      "Оптимизация расчетов...",
+      "Формирование отчета...",
     ];
 
     let currentStep = 0;
@@ -64,7 +67,7 @@ export const BusinessPlanGenerator = ({
     setError(null);
     setResult(null); // Clear previous results immediately when starting a new calculation
     
-    toast.info("Начинаем анализ бизнес-идеи");
+    toast.info("Начинаем анализ бизнес-идеи. Это может занять до 35 секунд.");
     
     try {
       const data = await fetchBusinessPlan(idea, location, webhookUrl);
@@ -96,16 +99,9 @@ export const BusinessPlanGenerator = ({
           <h2 className="text-2xl font-bold text-cyan-800 text-center mb-6">Результаты анализа</h2>
           <BusinessPlanMetrics data={result} />
           <BusinessPlanDetails data={result} />
-          <BusinessPlanCallToAction onContactRequest={() => setShowContactForm(true)} />
+          <BusinessPlanCallToAction onContactRequest={() => window.open("https://forms.gle/4gLvkK979hPjNeCEA", "_blank")} />
         </div>
       )}
-      
-      <ContactFormModal 
-        open={showContactForm} 
-        onOpenChange={setShowContactForm}
-        title="Заказать расчет бизнес-плана под ключ"
-        description="Оставьте свои контактные данные, и наш специалист свяжется с вами для обсуждения деталей"
-      />
     </div>
   );
 };

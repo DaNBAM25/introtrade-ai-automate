@@ -65,7 +65,22 @@ export const ChatInterface = ({
       }
 
       const data = await response.json();
-      setMessages(prev => [...prev, { content: data.response || data.message || "No response received", isUser: false }]);
+      
+      // Handle the new response structure with "output" property
+      let responseText = "";
+      if (Array.isArray(data) && data[0] && data[0].output) {
+        responseText = data[0].output;
+      } else if (data.output) {
+        responseText = data.output;
+      } else if (data.response) {
+        responseText = data.response;
+      } else if (data.message) {
+        responseText = data.message;
+      } else {
+        responseText = "No response received";
+      }
+      
+      setMessages(prev => [...prev, { content: responseText, isUser: false }]);
     } catch (error) {
       console.error("Error:", error);
       // Use a fallback response instead of just showing an error toast
