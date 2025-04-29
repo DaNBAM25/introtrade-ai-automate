@@ -21,6 +21,7 @@ export const BusinessPlanGenerator = ({
   const [result, setResult] = useState<BusinessPlanResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [showContactForm, setShowContactForm] = useState(false);
+  const [processingStep, setProcessingStep] = useState<string | null>(null);
   const resultRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -28,6 +29,30 @@ export const BusinessPlanGenerator = ({
       resultRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [result]);
+
+  // Simulates progression through different analysis steps
+  useEffect(() => {
+    if (!isLoading) {
+      setProcessingStep(null);
+      return;
+    }
+
+    const steps = [
+      "Анализ бизнес-идеи...",
+      "Изучение локального рынка...",
+      "Составление финансовой модели...",
+      "Расчет потенциальной прибыли...",
+      "Финализация бизнес-плана...",
+    ];
+
+    let currentStep = 0;
+    const intervalId = setInterval(() => {
+      setProcessingStep(steps[currentStep]);
+      currentStep = (currentStep + 1) % steps.length;
+    }, 2500);
+
+    return () => clearInterval(intervalId);
+  }, [isLoading]);
 
   const handleSubmit = async (idea: string, location: string) => {
     if (!idea.trim() || !location.trim()) {
@@ -38,6 +63,8 @@ export const BusinessPlanGenerator = ({
     setIsLoading(true);
     setError(null);
     setResult(null); // Clear previous results immediately when starting a new calculation
+    
+    toast.info("Начинаем анализ бизнес-идеи");
     
     try {
       const data = await fetchBusinessPlan(idea, location, webhookUrl);
@@ -62,7 +89,7 @@ export const BusinessPlanGenerator = ({
         </Alert>
       )}
       
-      <BusinessPlanForm onSubmit={handleSubmit} isLoading={isLoading} />
+      <BusinessPlanForm onSubmit={handleSubmit} isLoading={isLoading} processingStep={processingStep} />
 
       {result && (
         <div ref={resultRef} className="space-y-8">

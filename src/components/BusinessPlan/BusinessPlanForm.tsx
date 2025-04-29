@@ -7,9 +7,10 @@ import { Loader, Sparkles } from "lucide-react";
 interface BusinessPlanFormProps {
   onSubmit: (idea: string, location: string) => void;
   isLoading: boolean;
+  processingStep?: string | null;
 }
 
-export const BusinessPlanForm = ({ onSubmit, isLoading }: BusinessPlanFormProps) => {
+export const BusinessPlanForm = ({ onSubmit, isLoading, processingStep }: BusinessPlanFormProps) => {
   const [idea, setIdea] = useState("");
   const [location, setLocation] = useState("");
 
@@ -27,6 +28,7 @@ export const BusinessPlanForm = ({ onSubmit, isLoading }: BusinessPlanFormProps)
             onChange={(e) => setIdea(e.target.value)}
             placeholder="Введите вашу бизнес-идею"
             className="pl-4 py-6 text-lg rounded-xl shadow-sm border-cyan-100 focus-visible:ring-cyan-400"
+            disabled={isLoading}
           />
         </div>
         <div className="relative">
@@ -35,9 +37,23 @@ export const BusinessPlanForm = ({ onSubmit, isLoading }: BusinessPlanFormProps)
             onChange={(e) => setLocation(e.target.value)}
             placeholder="Введите страну или город"
             className="pl-4 py-6 text-lg rounded-xl shadow-sm border-cyan-100 focus-visible:ring-cyan-400"
+            disabled={isLoading}
           />
         </div>
       </div>
+      
+      {isLoading && processingStep && (
+        <div className="bg-cyan-50 p-4 rounded-lg border border-cyan-100 animate-fade-in">
+          <div className="flex items-center justify-center gap-3 mb-3">
+            <Loader className="h-5 w-5 text-cyan-700 animate-spin" />
+            <p className="text-cyan-800 font-medium">{processingStep}</p>
+          </div>
+          <div className="w-full bg-cyan-200 rounded-full h-1.5">
+            <div className="bg-gradient-to-r from-cyan-500 to-blue-600 h-1.5 rounded-full animate-pulse w-3/4"></div>
+          </div>
+        </div>
+      )}
+      
       <Button 
         type="submit" 
         disabled={isLoading || !idea.trim() || !location.trim()} 
