@@ -42,6 +42,7 @@ export const BusinessPlanGenerator = ({
     try {
       const data = await fetchBusinessPlan(idea, location, webhookUrl);
       setResult(data);
+      toast.success("Бизнес-план успешно сгенерирован!");
     } catch (error) {
       console.error("Error:", error);
       setError("Сервис временно недоступен. Мы работаем над решением проблемы.");
@@ -54,9 +55,9 @@ export const BusinessPlanGenerator = ({
   };
 
   return (
-    <div className="border-4 border-cyan-500 rounded-lg p-6">
+    <div className="border border-cyan-200 rounded-2xl p-8 shadow-lg bg-white">
       {error && (
-        <Alert variant="destructive" className="mb-4">
+        <Alert variant="destructive" className="mb-6 border border-red-200 bg-red-50">
           <AlertDescription>{error}</AlertDescription>
         </Alert>
       )}
@@ -64,7 +65,8 @@ export const BusinessPlanGenerator = ({
       <BusinessPlanForm onSubmit={handleSubmit} isLoading={isLoading} />
 
       {result && (
-        <div ref={resultRef} className="space-y-6">
+        <div ref={resultRef} className="space-y-8">
+          <h2 className="text-2xl font-bold text-cyan-800 text-center mb-6">Результаты анализа</h2>
           <BusinessPlanMetrics data={result} />
           <BusinessPlanDetails data={result} />
           <BusinessPlanCallToAction onContactRequest={() => setShowContactForm(true)} />
