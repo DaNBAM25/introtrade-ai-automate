@@ -55,6 +55,7 @@ export const BusinessPlanGenerator = ({ webhookUrl = "https://testforspaw.app.n8
 
     setIsLoading(true);
     setError(null);
+    setResult(null); // Clear previous results immediately when starting a new calculation
     
     try {
       const controller = new AbortController();
