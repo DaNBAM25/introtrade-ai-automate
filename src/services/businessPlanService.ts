@@ -10,6 +10,9 @@ export async function fetchBusinessPlan(
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), timeout);
   
+  console.log("Sending business plan request to:", webhookUrl);
+  console.log("Request payload:", { idea, location });
+  
   const response = await fetch(webhookUrl, {
     method: "POST",
     headers: {
@@ -22,10 +25,13 @@ export async function fetchBusinessPlan(
   clearTimeout(timeoutId);
   
   if (!response.ok) {
+    console.error("Business plan API error:", response.status);
     throw new Error(`Ошибка сервера: ${response.status}`);
   }
 
-  return await response.json();
+  const data = await response.json();
+  console.log("Business plan response received:", data);
+  return data;
 }
 
 export function getDefaultBusinessPlan(): BusinessPlanResponse {

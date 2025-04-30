@@ -1,10 +1,8 @@
 
-import { useState } from "react";
+import { LucideIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { ContactFormModal } from "@/components/ContactFormModal";
-import { LucideIcon } from "lucide-react";
 
 interface ServicePageProps {
   title: string;
@@ -25,8 +23,6 @@ export const ServicePage = ({
   iconColor = "text-cyan-500",
   backgroundColor = "bg-cyan-50"
 }: ServicePageProps) => {
-  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
-
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
@@ -86,19 +82,12 @@ export const ServicePage = ({
           <Button 
             size="lg" 
             className="bg-cyan-600 hover:bg-cyan-700"
-            onClick={() => setIsContactModalOpen(true)}
+            onClick={() => window.open("https://forms.gle/4gLvkK979hPjNeCEA", "_blank")}
           >
             Связаться со специалистом
           </Button>
         </div>
       </div>
-
-      <ContactFormModal
-        open={isContactModalOpen}
-        onOpenChange={setIsContactModalOpen}
-        title={`Получить консультацию по ${title}`}
-        description="Оставьте ваши контактные данные, и наш специалист свяжется с вами в ближайшее время с персональным предложением."
-      />
       <Footer />
     </div>
   );

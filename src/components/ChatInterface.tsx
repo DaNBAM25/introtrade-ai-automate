@@ -46,6 +46,9 @@ export const ChatInterface = ({
     try {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 seconds timeout for better reliability
+      
+      console.log("Sending request to webhook:", webhookUrl);
+      console.log("Request payload:", { query: userMessage });
 
       const response = await fetch(webhookUrl, {
         method: "POST",
@@ -55,28 +58,36 @@ export const ChatInterface = ({
         body: JSON.stringify({ query: userMessage }),
         signal: controller.signal
       }).catch(err => {
+        console.error("Fetch error:", err);
         throw new Error("Не удалось подключиться к серверу.");
       });
 
       clearTimeout(timeoutId);
 
       if (!response.ok) {
+        console.error("Server error status:", response.status);
         throw new Error(`Ошибка сервера: ${response.status}`);
       }
 
       const data = await response.json();
+      console.log("Received response data:", data);
       
       // Handle the new response structure with "output" property
       let responseText = "";
-      if (Array.isArray(data) && data[0] && data[0].output) {
+      if (Array.isArray(data) && data.length > 0 && data[0] && typeof data[0].output === 'string') {
         responseText = data[0].output;
-      } else if (data.output) {
+        console.log("Extracted output from array:", responseText);
+      } else if (data && typeof data.output === 'string') {
         responseText = data.output;
-      } else if (data.response) {
+        console.log("Extracted output from object:", responseText);
+      } else if (data && typeof data.response === 'string') {
         responseText = data.response;
-      } else if (data.message) {
+        console.log("Using fallback response property:", responseText);
+      } else if (data && typeof data.message === 'string') {
         responseText = data.message;
+        console.log("Using fallback message property:", responseText);
       } else {
+        console.error("Unexpected response format:", data);
         responseText = "No response received";
       }
       

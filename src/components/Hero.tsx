@@ -1,12 +1,10 @@
 
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ContactFormModal } from "@/components/ContactFormModal";
 import { useState } from "react";
 
 const Hero = () => {
   const navigate = useNavigate();
-  const [showContactForm, setShowContactForm] = useState(false);
 
   return (
     <div className="relative bg-gradient-to-br from-cyan-600 to-blue-800 text-white">
@@ -33,20 +31,13 @@ const Hero = () => {
             <Button 
               size="lg" 
               className="bg-cyan-500 hover:bg-cyan-600"
-              onClick={() => setShowContactForm(true)}
+              onClick={() => window.open("https://forms.gle/4gLvkK979hPjNeCEA", "_blank")}
             >
               Заказать внедрение
             </Button>
           </div>
         </div>
       </div>
-
-      <ContactFormModal 
-        open={showContactForm} 
-        onOpenChange={setShowContactForm}
-        title="Заказать внедрение"
-        description="Оставьте свои контакты, и наш специалист свяжется с вами в ближайшее время"
-      />
     </div>
   );
 };
