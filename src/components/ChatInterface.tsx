@@ -72,26 +72,44 @@ export const ChatInterface = ({
       const data = await response.json();
       console.log("Received response data:", data);
       
-      // Handle the new response structure with "output" property
+      // Improved response extraction logic to handle various formats
       let responseText = "";
-      if (Array.isArray(data) && data.length > 0 && data[0] && typeof data[0].output === 'string') {
-        responseText = data[0].output;
-        console.log("Extracted output from array:", responseText);
-      } else if (data && typeof data.output === 'string') {
+      
+      // Handle array format with output property
+      if (Array.isArray(data) && data.length > 0) {
+        console.log("Response is an array with length:", data.length);
+        if (data[0] && typeof data[0].output === 'string') {
+          responseText = data[0].output;
+          console.log("Extracted output from array:", responseText);
+        }
+      } 
+      // Handle object with output property
+      else if (data && typeof data.output === 'string') {
         responseText = data.output;
         console.log("Extracted output from object:", responseText);
-      } else if (data && typeof data.response === 'string') {
+      } 
+      // Handle object with response property
+      else if (data && typeof data.response === 'string') {
         responseText = data.response;
         console.log("Using fallback response property:", responseText);
-      } else if (data && typeof data.message === 'string') {
+      } 
+      // Handle object with message property
+      else if (data && typeof data.message === 'string') {
         responseText = data.message;
         console.log("Using fallback message property:", responseText);
-      } else {
+      } 
+      // Direct string response
+      else if (typeof data === 'string') {
+        responseText = data;
+        console.log("Response is a direct string");
+      }
+      // If all else fails
+      else {
         console.error("Unexpected response format:", data);
-        responseText = "No response received";
+        responseText = "Не удалось получить ответ от сервера";
       }
       
-      setMessages(prev => [...prev, { content: responseText, isUser: false }]);
+      setMessages(prev => [...prev, { content: responseText.trim(), isUser: false }]);
     } catch (error) {
       console.error("Error:", error);
       // Use a fallback response instead of just showing an error toast

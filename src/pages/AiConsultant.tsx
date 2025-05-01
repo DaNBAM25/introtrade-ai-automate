@@ -3,6 +3,7 @@ import { ChatInterface } from "@/components/ChatInterface";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
+import { ExternalLink } from "lucide-react";
 
 const AiConsultant = () => {
   return (
@@ -25,10 +26,10 @@ const AiConsultant = () => {
 
           <Button 
             size="lg"
-            className="bg-cyan-500 hover:bg-cyan-600"
+            className="bg-cyan-500 hover:bg-cyan-600 gap-2"
             onClick={() => window.open("https://forms.gle/4gLvkK979hPjNeCEA", "_blank")}
           >
-            👉 Записаться на консультацию
+            Записаться на консультацию <ExternalLink className="h-4 w-4" />
           </Button>
         </div>
       </main>
