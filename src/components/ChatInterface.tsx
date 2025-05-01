@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -72,10 +71,10 @@ export const ChatInterface = ({
       const data = await response.json();
       console.log("Received response data:", data);
       
-      // Improved response extraction logic to handle various formats
+      // Extract the output text from various response formats
       let responseText = "";
       
-      // Handle array format with output property
+      // First check for direct array format with output property (most common case)
       if (Array.isArray(data) && data.length > 0) {
         console.log("Response is an array with length:", data.length);
         if (data[0] && typeof data[0].output === 'string') {
@@ -83,30 +82,50 @@ export const ChatInterface = ({
           console.log("Extracted output from array:", responseText);
         }
       } 
-      // Handle object with output property
+      // Check for the output property in the response (direct object)
       else if (data && typeof data.output === 'string') {
         responseText = data.output;
         console.log("Extracted output from object:", responseText);
-      } 
-      // Handle object with response property
-      else if (data && typeof data.response === 'string') {
-        responseText = data.response;
-        console.log("Using fallback response property:", responseText);
-      } 
-      // Handle object with message property
-      else if (data && typeof data.message === 'string') {
-        responseText = data.message;
-        console.log("Using fallback message property:", responseText);
-      } 
-      // Direct string response
-      else if (typeof data === 'string') {
-        responseText = data;
-        console.log("Response is a direct string");
       }
-      // If all else fails
-      else {
-        console.error("Unexpected response format:", data);
-        responseText = "Не удалось получить ответ от сервера";
+      // Handle deeply nested structure in response
+      else if (data && typeof data === 'object') {
+        console.log("Found complex object response, trying to extract output");
+        
+        // Try to find an output property in the nested structure
+        const findOutputInNestedObject = (obj: any): string | null => {
+          // If this is an object with an output property, return it
+          if (obj && typeof obj.output === 'string') {
+            return obj.output;
+          }
+          
+          // Otherwise, search through all properties
+          for (const key in obj) {
+            if (typeof obj[key] === 'object' && obj[key] !== null) {
+              const result = findOutputInNestedObject(obj[key]);
+              if (result) return result;
+            }
+          }
+          
+          return null;
+        };
+        
+        const nestedOutput = findOutputInNestedObject(data);
+        if (nestedOutput) {
+          responseText = nestedOutput;
+          console.log("Found output in nested structure:", responseText);
+        }
+      }
+      
+      // If still no response text, try to get the entire response as a string
+      if (!responseText && typeof data === 'string') {
+        responseText = data;
+        console.log("Using direct string response:", responseText);
+      }
+      
+      // If still nothing, use a fallback message
+      if (!responseText) {
+        console.error("Could not extract response text from:", data);
+        responseText = "Не удалось обработать ответ сервера. Пожалуйста, попробуйте еще раз.";
       }
       
       setMessages(prev => [...prev, { content: responseText.trim(), isUser: false }]);
