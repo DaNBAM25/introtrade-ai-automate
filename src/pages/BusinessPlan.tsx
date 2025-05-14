@@ -17,7 +17,7 @@ const BusinessPlan = () => {
           </p>
           
           <div className="mb-8">
-            <BusinessPlanGenerator webhookUrl="https://testforspaw.app.n8n.cloud/webhook/get_plan" />
+            <BusinessPlanGenerator webhookUrl="https://tets321.app.n8n.cloud/webhook/get_plan" />
           </div>
         </div>
       </main>

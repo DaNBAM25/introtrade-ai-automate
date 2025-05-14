@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -19,7 +18,7 @@ interface ChatInterfaceProps {
 
 export const ChatInterface = ({ 
   className,
-  webhookUrl = "https://testforspaw.app.n8n.cloud/webhook/consult"
+  webhookUrl = "https://tets321.app.n8n.cloud/webhook/consult"
 }: ChatInterfaceProps) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
