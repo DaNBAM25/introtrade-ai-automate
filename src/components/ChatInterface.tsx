@@ -18,7 +18,7 @@ interface ChatInterfaceProps {
 
 export const ChatInterface = ({ 
   className,
-  webhookUrl = "https://testforspaw.app.n8n.cloud/webhook/consult"
+  webhookUrl = "https://tets321.app.n8n.cloud/webhook/consult"
 }: ChatInterfaceProps) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
