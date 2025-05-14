@@ -15,7 +15,7 @@ interface BusinessPlanGeneratorProps {
 }
 
 export const BusinessPlanGenerator = ({ 
-  webhookUrl = "https://tets321.app.n8n.cloud/webhook/get_plan" 
+  webhookUrl = "https://testforspaw.app.n8n.cloud/webhook/get_plan" 
 }: BusinessPlanGeneratorProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [result, setResult] = useState<BusinessPlanResponse | null>(null);

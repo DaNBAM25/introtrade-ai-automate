@@ -20,7 +20,7 @@ const AiConsultant = () => {
           
           <div className="mb-8">
             <div className="p-4">
-              <ChatInterface className="h-[400px]" webhookUrl="https://tets321.app.n8n.cloud/webhook/consult" />
+              <ChatInterface className="h-[400px]" webhookUrl="https://testforspaw.app.n8n.cloud/webhook/consult" />
             </div>
           </div>
 
